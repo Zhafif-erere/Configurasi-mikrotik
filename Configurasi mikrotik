@@ -1,0 +1,19 @@
+Setup Hotspot
+Buka IP > Hotspot > Hotspot Setup, pilih interface LAN (misalnya wlan1 atau bridge-local), next hingga IP address (default 10.5.50.1/24), centang Masquerade Network, tentukan address pool (10.5.50.2-10.5.50.254), lalu next.
+Buat user: IP > Hotspot > Users > +, isi Name dan Password, set limit-uptime jika perlu, Apply.
+Akses login page otomatis di browser klien pada IP hotspot .
+Pengaturan Simple Queue
+Masuk Queues > Simple Queues > +, Name=queue1, Target=192.168.88.0/24 (atau IP spesifik), Max Limit up=5M/1M (upload/download), dst=0.0.0.0/0, Apply
+Untuk user individual: tambah queue baru dengan Target IP client, sesuaikan burst threshold untuk kecepatan sementara 
+Monitor di tab Statistics untuk traffic total 
+Firewall NAT Lengkap
+IP > Firewall > NAT > +, Chain=srcnat, Src. Address=192.168.88.0/24, Out. Interface List=WAN, Action=masquerade untuk seluruh LAN
+Tambah rule dstnat untuk port forward: Chain=dstnat, Dst. Port=80, Protocol=tcp, In. Interface=WAN, To Addresses=LAN IP, Action=dst-nat 
+Filter Rules: tambah accept untuk established/related, drop invalid di chain=input/forward 
+Tips Keamanan dan Backup
+Enable DNS remote requests: IP > DNS, centang Allow Remote Requests, Servers=8.8.8.8 .
+Export config: /export file=backup.rsc, download via Files
+Test koneksi dengan /tool traceroute google.com dan monitor log di Log tab 
+
+
+

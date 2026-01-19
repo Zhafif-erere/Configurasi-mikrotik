@@ -1,1 +1,0 @@
-# Configurasi-mikrotik
